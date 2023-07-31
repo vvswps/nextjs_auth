@@ -35,7 +35,7 @@ export default function SignupPage() {
       return;
     }
     setButtonDisabled(true);
-    toast.loading("Talking to the server");
+    const toastId = toast.loading("Talking to the server");
     try {
       const res = await axios.post("/api/users/signup", user);
       if (res.data.status === 201) {
@@ -48,6 +48,7 @@ export default function SignupPage() {
       console.log(err.message);
       toast.error(err.message);
     } finally {
+      toast.dismiss(toastId);
       setButtonDisabled(false);
     }
   };

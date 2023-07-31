@@ -15,6 +15,7 @@ export default function LoginPage() {
   });
 
   const onLogin = async () => {
+    const toastId = toast.loading("Logging in...");
     try {
       const res = await axios.post("/api/users/login", user);
       if (res.data.success) {
@@ -25,6 +26,8 @@ export default function LoginPage() {
       }
     } catch (err: any) {
       toast.error(err.message);
+    } finally {
+      toast.dismiss(toastId);
     }
   };
   return (
