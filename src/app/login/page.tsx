@@ -2,16 +2,34 @@
 
 import React from "react";
 import Link from "next/link";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { toast } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 
 export default function LoginPage() {
+  const router = useRouter();
   const [user, setUser] = React.useState({
     email: "",
     password: "",
   });
 
-  const onLogin = async () => {};
+  const onLogin = async () => {
+    try {
+      const res = await axios.post("/api/users/login", user);
+      if (res.data.success) {
+        toast.success("Login successful");
+        router.push(`/profile/${res.data.username}`);
+      } else {
+        toast.error(res.data.message);
+      }
+    } catch (err: any) {
+      toast.error(err.message);
+    }
+  };
   return (
     <div className="flex flex-col items-center justify-center h-screen">
+      <Toaster />
       <h1 className="mb-6 text-4xl">Login</h1>
       <label className="mb-1 mt-1" htmlFor="email">
         Email
