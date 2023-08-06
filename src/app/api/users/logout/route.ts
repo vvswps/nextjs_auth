@@ -10,8 +10,10 @@ export async function GET() {
       httpOnly: true,
       expires: new Date(0),
     });
+    console.log("User logged out successfully");
     return response;
   } catch (error: any) {
+    console.log("There was some error: ", error);
     return NextResponse.json({ message: error.message, status: 500 });
   }
 }
